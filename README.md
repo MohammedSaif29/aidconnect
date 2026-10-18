@@ -1,41 +1,52 @@
-# AidConnect — Local Server
+# 🤝 AidConnect
 
-This is a minimal Node.js/Express server to serve the AidConnect frontend (`index.html`) and provide a couple of example API endpoints for requests and donations.
+A donation platform that connects people who need help with donors who want to give. Beneficiaries post aid requests, an admin reviews and approves them, and donors browse requests and donate.
 
-## Prerequisites
-- Node.js 14+ installed
-- Powershell (Windows) — commands below use PowerShell
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=nodedotjs&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-better--sqlite3-003B57?logo=sqlite&logoColor=white)
+![JWT](https://img.shields.io/badge/Auth-JWT_%2B_bcrypt-000000?logo=jsonwebtokens)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 
-## Install
-Open PowerShell, change directory to the project folder (where `index.html` and `server.js` live), then run:
+---
 
-```powershell
-cd "c:\Users\Asus\OneDrive\project\Donation\Main functoning appp"
+## ✨ Features
+
+- **Aid requests** — anyone can submit a request for help, which starts as *pending*
+- **Admin verification** — admins review pending requests and mark them approved or rejected
+- **Donations** — donors browse requests and donate; every donation is recorded against its request
+- **Role-based login** — separate Donor and Admin flows with **JWT** authentication and **bcrypt**-hashed passwords
+- **Admin dashboard** — view pending requests and the full donation history
+- **Persistent storage** — SQLite database with users, requests and donations tables and foreign-key constraints
+
+## 🛠️ Tech Stack
+
+Node.js · Express · better-sqlite3 · JSON Web Tokens · bcryptjs · HTML · CSS · JavaScript
+
+## 🔌 API
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `POST` | `/api/auth/login` | Public | Log in as donor or admin |
+| `GET` | `/api/requests` | Public | List aid requests with their status |
+| `GET` | `/api/requests/:id` | Public | Request details |
+| `POST` | `/api/requests` | Public | Submit a new aid request |
+| `POST` | `/api/donate` | Public | Record a donation to a request |
+| `GET` | `/api/admin/requests/pending` | Admin | Requests awaiting review |
+| `PATCH` | `/api/requests/:id` | Admin | Approve or reject a request |
+| `GET` | `/api/admin/donations` | Admin | All donations |
+
+## 🚀 Run Locally
+
+```bash
 npm install
+npm install better-sqlite3
+node scripts/set-admin-password.js "choose-a-strong-password"   # set the admin password
+npm start                                                       # http://localhost:3000
 ```
 
-## Run
-Start the server:
+Set `JWT_SECRET` as an environment variable before running in any shared environment.
 
-```powershell
-npm start
-```
+## 👤 Author
 
-The server listens on http://localhost:3000 by default. Open that URL in your browser to see the frontend.
-
-## Development
-Use nodemon for auto-reload while editing:
-
-```powershell
-npm run dev
-```
-
-## Available API endpoints
-- GET /api/requests — list available requests
-- POST /api/donate — submit a donation (body: { requestId, donorName?, amount })
-- GET /api/donations — list donations
-
-## Notes & next steps
-- This server uses in-memory data. For production, connect to a real database (MongoDB, Postgres, etc.).
-- If the frontend expects AJAX calls, adapt client JS to call the endpoints above.
-"# batch4-project-" 
+**Mohammed Saif** — B.Tech CSE
+[LinkedIn](https://www.linkedin.com/in/saif-mohammed-939902335/) · [GitHub](https://github.com/MohammedSaif29)
